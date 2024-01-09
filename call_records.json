@@ -1,0 +1,26 @@
+{ "record_id": "548923156",
+"call_start_time": "2023-05-15T08:20:45",
+"call_end_time": "2023-05-15T08:35:22",
+"caller_number": "+15555551234",
+"caller_device_id": "A12345",
+"callee_number": "+18888881234",
+"callee_device_id": "B67890",
+"call_type": "voice",
+"call_direction": "outgoing",
+"call_duration_seconds": 937,
+"call_status" : "completed",
+"call_quality": "good",
+"location":
+{ "latitude": 34.0522,
+"longitude": -118.2437 },
+"network_info":
+{ "tower_id": "TWR567",
+"cell_id": " CELL123",
+"signal_strength":
+-75 },
+"billing_info":
+{ "total_cost": 2.50,
+"currency": "USD",
+"billing_duration_seconds":
+960 }, "additional_info":
+{ "roaming_status": "domestic", "priority_customer": true }}
