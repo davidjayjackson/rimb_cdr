@@ -9,3 +9,14 @@
   Finaly 0.05 percent are to be “false positives”, and other 0.5 percent are to be false “negative”, create a new column called adult for the , put a F = fraud, G = good, P = false positives, and N = false positives
 
 ```
+```
+## Revised prompts written by Grammarly
+The task is to use the call detail record layout (Cdr.xlsx) to create a dataset of 100,000 rows/calls. 
+The dataset should have no more than 30 unique customers (uid) who are located in Tunisia. 
+Using the total_time column and the "Analysis of Abnormal Call Duration" along with the example statement provided, the goal is to identify suspicious records by placing an "F" in the fraud column and a "G" in the valid call column. 
+The fraud detection process should focus on extremely short or abnormally long call durations, which may indicate fraudulent activity such as SIM card fraud. 
+For instance, a large number of very short calls or several prolonged calls to the same number may indicate a fraud attempt. 
+However, no more than 10% of the calls should be flagged as fraudulent. Furthermore, to avoid false positives and false negatives, a new column called "adult" should be created. 
+In this column, "F" stands for fraud, "G" stands for good, "P" stands for false positives, and "N" stands for false negatives. 
+The false positive rate should be 0.05%, while the false negative rate should be 0.05%.
+```
