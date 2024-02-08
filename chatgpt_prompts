@@ -1,0 +1,11 @@
+```
+(2)	Here is the requirement. Using the call detail record layout (Cdr.xlsx) to create dataset containing 100,000 rows/call. 
+  The data is two have no more than 30 customers i.e. uid.   The customers are located in Tunisia. 
+  Use the total_time column and the “Analysis of Abnormal Call Duration” and 
+  Example statement to make some records suspect by placing a “F” and the rest of the rows  "G" for call is valid in the fraud column. 
+  No more than 10% of cause are to be flagged as fraud. 
+  Analysis of Abnormal Call Duration: Fraud detection may involve analyzing extremely short or abnormally long call durations, which may indicate fraudulent activity such as SIM card fraud.
+  Example : A large number of very short calls or several prolonged calls to the same number may indicate a fraud attempt. 
+  Finaly 0.05 percent are to be “false positives”, and other 0.5 percent are to be false “negative”, create a new column called adult for the , put a F = fraud, G = good, P = false positives, and N = false positives
+
+```
