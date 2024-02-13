@@ -1,0 +1,102 @@
+---
+title: Audit Trail
+jupyter: python3
+format: html
+---
+
+```{python}
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+
+def classify_call(row):
+    if row['CallTimeMinutes'] <= 0:
+        return "E"
+    elif 0 < row['CallTimeMinutes'] <= 1.1 or row['CallTimeMinutes'] >= 146:
+        return "S"
+    else:
+        return "G"
+
+# Replace 'your_excel_file.xlsx' with the path to your Excel file
+excel_file_path = '../Data/call_classification_data.xlsx'
+
+
+
+# Read the Excel file
+df = pd.read_excel(excel_file_path)
+
+# Convert 'CallDate' to datetime
+df['CallDate'] = pd.to_datetime(df['CallDate'])
+
+# Verify the conversion
+print(df['CallDate'].dtype)
+print(df.head())
+
+# Apply the classification logic
+df['Audit'] = df.apply(classify_call, axis=1)
+
+# Create a sample DataFrame
+```
+```{python}
+# Get the value counts
+value_counts = df['Audit'].value_counts()
+
+# Plot the value counts
+plt.bar(value_counts.index, value_counts.values)
+plt.xlabel('Classification')
+plt.ylabel('Count')
+plt.title('Distribution of Classifications')
+plt.show()
+value_counts
+
+```
+```{python}
+# Calculate the accuracy
+accuracy = (df['Classification'] == df['Audit']).mean()
+accuracy_percentage = accuracy * 100
+
+print(f"Accuracy: {accuracy_percentage:.2f}%")
+```
+```{python}
+# Prepare the data
+call_counts = df['CallDate'].value_counts().reset_index()
+call_counts.columns = ['CallDate', 'Counts']  # Renaming columns for clarity
+
+# Create the regression plot
+sns.lineplot(x='CallDate', y='Counts', data=call_counts)
+
+# Customize the plot
+plt.xlabel('Call Date')
+plt.ylabel('Number of Calls')
+plt.title('Call Frequency Over Time')
+plt.xticks(rotation=45)  # Rotates the x-axis labels for better readability
+
+plt.show()
+```
+```{python}
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Convert 'CallDate' to a numeric value (e.g., number of days since the first date)
+grouped_data = df.groupby(['CallDate', 'Classification']).size().reset_index(name='Counts')
+grouped_data['CallDateNumeric'] = (grouped_data['CallDate'] - grouped_data['CallDate'].min()).dt.days
+
+# Create the regression plot with different lines for each classification
+sns.lmplot(x='CallDateNumeric', y='Counts', hue='Classification', data=grouped_data, aspect=2)
+
+# Customize the plot
+plt.xlabel('Days Since Start')
+plt.ylabel('Number of Calls')
+plt.title('Call Frequency Over Time by Classification')
+plt.xticks(rotation=45)  # You might need to adjust the x-ticks to make them meaningful
+
+plt.show()
+
+```
+
+```{python}
+# Export to a new Excel file
+df.to_excel('../Data/updated_file.xlsx', index=False)
+```

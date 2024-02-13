@@ -1,0 +1,110 @@
+---
+title: Create Random Call Details Records
+jupyter: python3
+format: html
+---
+```{python}
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+# from docx import Document
+```
+# Function to generate Tunisian phone numbers
+```{python}
+def generate_tunisian_phone_number():
+    prefix = np.random.choice(['2', '4', '5', '9'])
+    number = ''.join([str(np.random.randint(0, 10)) for _ in range(7)])
+    return prefix + number
+```
+# Constants for dataset generation
+```{python}
+num_records = 100000
+num_unique_customers = 30
+max_fraud_calls = int(0.10 * num_records)  # 10% fraudulent calls
+max_false_positives = int(0.0005 * num_records)  # 0.05% false positives
+max_false_negatives = int(0.0005 * num_records)  # 0.05% false negatives
+```
+# Random data generation
+```{python}
+np.random.seed(0)
+uids = np.random.choice(range(1, num_unique_customers + 1), size=num_records)
+dates = pd.date_range(start="2023-10-01", periods=num_records, freq='T')
+trip_sequences = np.random.randint(1, 10, size=num_records)
+mobility_types = np.random.choice(['STAY', 'MOVE'], size=num_records)
+transport_modes = np.random.choice(['Car', 'Bus', 'Train', 'Bike', 'Walk', 'None'], size=num_records)
+call_durations = np.random.randint(1, 7200 + 1, size=num_records)
+total_distance = np.random.uniform(0, 100, size=num_records)
+start_times = pd.date_range(start="2023-01-01", periods=num_records, freq='T')
+end_times = start_times + pd.to_timedelta(call_durations, unit='s')
+total_points = np.random.randint(1, 50, size=num_records)
+point_lists = ["PointList_" + str(i) for i in range(num_records)]
+
+```
+# Creating DataFrame
+```{python}
+cdr_data = pd.DataFrame({
+    'uid': uids,
+    'date': dates,
+    'trip_sequence': trip_sequences,
+    'mobility_type': mobility_types,
+    'transport_mode': transport_modes,
+    'total_distance': total_distance,
+    'total_time': call_durations,
+    'start_time': start_times,
+    'end_time': end_times,
+    'total_points': total_points,
+    'point_lists': point_lists
+})
+```
+# Fraud detection logic
+```{python}
+very_short_threshold = np.percentile(cdr_data['total_time'], 10)
+abnormally_long_threshold = np.percentile(cdr_data['total_time'], 90)
+cdr_data['fraud'] = 'G'
+cdr_data['valid_call'] = 'G'
+fraud_calls = (cdr_data['total_time'] < very_short_threshold) | (cdr_data['total_time'] > abnormally_long_threshold)
+fraud_indices = cdr_data[fraud_calls].index
+selected_fraud_indices = np.random.choice(fraud_indices, size=min(max_fraud_calls, len(fraud_indices)), replace=False)
+cdr_data.loc[selected_fraud_indices, 'fraud'] = 'F'
+cdr_data.loc[selected_fraud_indices, 'valid_call'] = 'F'
+```
+# Adding 'audit' column
+```{python}
+cdr_data['audit'] = cdr_data['fraud']
+good_calls_indices = cdr_data[cdr_data['fraud'] == 'G'].index
+fraud_calls_indices = cdr_data[cdr_data['fraud'] == 'F'].index
+selected_false_positives_indices = np.random.choice(good_calls_indices, size=min(max_false_positives, len(good_calls_indices)), replace=False)
+selected_false_negatives_indices = np.random.choice(fraud_calls_indices, size=min(max_false_negatives, len(fraud_calls_indices)), replace=False)
+cdr_data.loc[selected_false_positives_indices, 'audit'] = 'P'
+cdr_data.loc[selected_false_negatives_indices, 'audit'] = 'N'
+```
+# Updating uid and destination_uid with Tunisian phone numbers
+```{python}
+cdr_data['uid'] = cdr_data['uid'].apply(lambda x: generate_tunisian_phone_number())
+cdr_data['destination_uid'] = [generate_tunisian_phone_number() for _ in range(len(cdr_data))]
+```
+
+# Visualization code
+# ... (Include the code for all the visualizations created) ...
+
+# Grouping the data by date and counting the number of calls for each day
+```{python}
+calls_per_day = cdr_data.groupby(cdr_data['date'].dt.date).size()
+
+# Creating a line plot for the number of calls per day
+plt.figure(figsize=(15, 6))
+calls_per_day.plot(kind='line', marker='o', linestyle='-')
+plt.title('Number of Calls Per Day')
+plt.xlabel('Date')
+plt.ylabel('Number of Calls')
+plt.xticks(rotation=45)
+plt.grid(True)
+plt.tight_layout()
+plt.show()
+```
+# Write csv file
+
+```{python}
+cdr_data.head()
+```

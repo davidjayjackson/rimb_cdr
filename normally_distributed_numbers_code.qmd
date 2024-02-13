@@ -1,0 +1,79 @@
+---
+titel: 
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Generating 100,000 random numbers between 15 and 10800
+random_numbers = np.random.randint(15, 10801, size=100000)
+
+# Creating a DataFrame
+df = pd.DataFrame(random_numbers, columns=["Random_Numbers"])
+
+# Saving the DataFrame to a CSV file
+df.to_csv('random_numbers.csv', index=False)
+
+# Plotting a histogram of the random numbers
+plt.figure(figsize=(12, 6))
+plt.hist(random_numbers, bins=50, color='blue', edgecolor='black')
+plt.title('Histogram of 100,000 Random Numbers between 15 and 10800')
+plt.xlabel('Number')
+plt.ylabel('Frequency')
+plt.grid(True)
+plt.show()
+
+# Plotting a boxplot of the random numbers
+plt.figure(figsize=(8, 6))
+plt.boxplot(random_numbers, vert=False)
+plt.title('Boxplot of 100,000 Random Numbers between 15 and 10800')
+plt.xlabel('Number')
+plt.grid(True)
+plt.show()
+
+# Introducing outliers
+num_outliers = 1000
+outlier_indices = np.random.choice(range(100000), num_outliers, replace=False)
+lower_outliers = np.random.randint(1, 15, size=num_outliers // 2)
+higher_outliers = np.random.randint(10801, 20001, size=num_outliers - num_outliers // 2)
+random_numbers_with_outliers = random_numbers.copy()
+random_numbers_with_outliers[outlier_indices[:num_outliers // 2]] = lower_outliers
+random_numbers_with_outliers[outlier_indices[num_outliers // 2:]] = higher_outliers
+
+# Saving the new DataFrame to a CSV file
+df_with_outliers = pd.DataFrame(random_numbers_with_outliers, columns=["Random_Numbers_with_Outliers"])
+df_with_outliers.to_csv('random_numbers_with_outliers.csv', index=False)
+
+# Plotting a boxplot of the modified numbers
+plt.figure(figsize=(8, 6))
+plt.boxplot(random_numbers_with_outliers, vert=False)
+plt.title('Boxplot of Random Numbers with Outliers')
+plt.xlabel('Number')
+plt.grid(True)
+plt.show()
+
+# Generating numbers with a normal distribution
+mean = (10800 + 15) / 2
+std_dev = (10800 - 15) / 6
+normally_distributed_numbers = np.random.normal(mean, std_dev, size=100000)
+normally_distributed_numbers_clipped = np.clip(normally_distributed_numbers, 15, 10800).astype(int)
+
+# Saving the DataFrame of normally distributed numbers to a CSV file
+df_normally_distributed = pd.DataFrame(normally_distributed_numbers_clipped, columns=["Normally_Distributed_Numbers"])
+df_normally_distributed.to_csv('normally_distributed_numbers.csv', index=False)
+
+# Plotting a histogram of the normally distributed numbers
+plt.figure(figsize=(12, 6))
+plt.hist(normally_distributed_numbers_clipped, bins=50, color='green', edgecolor='black')
+plt.title('Histogram of Normally Distributed Random Numbers (Clipped to 15-10800)')
+plt.xlabel('Number')
+plt.ylabel('Frequency')
+plt.grid(True)
+plt.show()
+
+# Plotting a boxplot of the normally distributed numbers
+plt.figure(figsize=(8, 6))
+plt.boxplot(normally_distributed_numbers_clipped, vert=False)
+plt.title('Boxplot of Normally Distributed Random Numbers (Clipped to 15-10800)')
+plt.xlabel('Number')
+plt.grid(True)
+plt.show()

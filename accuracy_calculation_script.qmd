@@ -1,0 +1,12 @@
+
+import pandas as pd
+
+# Load the data from the Excel file
+file_path = 'path_to_your_excel_file.xlsx'  # Replace with your file path
+data = pd.read_excel(file_path)
+
+# Calculate the accuracy
+accuracy = (data['Classification'] == data['Audit']).mean()
+accuracy_percentage = accuracy * 100
+
+print(f"Accuracy: {accuracy_percentage:.2f}%")

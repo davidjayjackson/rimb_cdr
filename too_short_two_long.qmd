@@ -1,0 +1,158 @@
+---
+title: Marking calls that are to long or to short
+format: html
+juypter: python 3
+---
+# Introduction: Chatgpt
+
+## Let's use all use the 3 Statistical Methods . 
+(me)Add a new column for each method and put a S for the ones that suspect and G in the other rows.
+ChatGPT.
+(chatgpt)Great choice! We'll apply three statistical methods to identify outliers (representing potentially suspicious call durations) in your dataset:
+
+* Standard Deviation Method: Calls more than 3 standard deviations from the mean are marked as suspicious.
+* Percentiles Method: Calls below the 5th percentile and above the 95th percentile are marked as suspicious.
+* Interquartile Range (IQR) Method: Calls outside 1.5 times the IQR from the 1st and 3rd quartiles are marked as suspicious.
+* For each method, we'll create a new column in your dataset. If a call duration is identified as suspicious by a method, we'll mark it with an 'S'; otherwise, we'll mark it with a 'G' for 'Good'.
+
+# Load your dataset
+```{python}
+import pandas as pd
+
+file_path = '../Data/updated_file.xlsx'  # Replace with your file path
+data = pd.read_excel(file_path)
+```
+
+# Calculate mean and standard deviation
+```{python}
+mean = data['CallTimeMinutes'].mean()
+std_dev = data['CallTimeMinutes'].std()
+```
+# Standard Deviation Method
+```{python}
+data['Std_Dev_Flag'] = data.apply(lambda row: 'S' if abs((row['CallTimeMinutes'] - mean) / std_dev) > 3 else 'G', axis=1)
+```
+# Percentiles Method
+```{python}
+lower_percentile, upper_percentile = data['CallTimeMinutes'].quantile([0.05, 0.95])
+data['Percentiles_Flag'] = data.apply(lambda row: 'S' if row['CallTimeMinutes'] < lower_percentile or row['CallTimeMinutes'] > upper_percentile else 'G', axis=1)
+```
+# Interquartile Range (IQR) Method
+```{python}
+Q1, Q3 = data['CallTimeMinutes'].quantile([0.25, 0.75])
+IQR = Q3 - Q1
+lower_bound = Q1 - 1.5 * IQR
+upper_bound = Q3 + 1.5 * IQR
+data['IQR_Flag'] = data.apply(lambda row: 'S' if row['CallTimeMinutes'] < lower_bound or row['CallTimeMinutes'] > upper_bound else 'G', axis=1)
+```
+# Quick EDA
+```{python}
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load the dataset with flags (assuming you have already run the previous code to add flags)
+# data = pd.read_excel('updated_dataset_with_flags.xlsx')
+
+# Overlayed Histograms
+
+plt.figure(figsize=(6, 4))
+sns.histplot(data[data['Std_Dev_Flag'] == 'S']['CallTimeMinutes'], color='red', label='Standard Deviation', kde=False)
+sns.histplot(data[data['Percentiles_Flag'] == 'S']['CallTimeMinutes'], color='blue', label='Percentiles', kde=False, alpha=0.6)
+sns.histplot(data[data['IQR_Flag'] == 'S']['CallTimeMinutes'], color='green', label='IQR', kde=False, alpha=0.3)
+plt.title('Comparison of Outlier Detection Methods')
+plt.xlabel('Call Duration (Seconds)')
+plt.ylabel('Frequency')
+plt.legend()
+plt.show()
+```
+# Scatter Plots with Flags
+```{python}
+plt.figure(figsize=(6, 4))
+plt.scatter(data.index, data['CallTimeMinutes'], c=data['Std_Dev_Flag'].apply(lambda x: 'red' if x == 'S' else 'grey'), label='Standard Deviation', alpha=0.5)
+plt.scatter(data.index, data['CallTimeMinutes'], c=data['Percentiles_Flag'].apply(lambda x: 'blue' if x == 'S' else 'none'), label='Percentiles', alpha=0.5)
+plt.scatter(data.index, data['CallTimeMinutes'], c=data['IQR_Flag'].apply(lambda x: 'green' if x == 'S' else 'none'), label='IQR', alpha=0.5)
+plt.title('Scatter Plot Showing Outliers Detected by Each Method')
+plt.xlabel('Index')
+plt.ylabel('Call Duration (Seconds)')
+plt.legend()
+plt.show()
+
+```
+# Boxplot
+```{python}
+# Preparing the data for boxplot
+data['Method'] = 'None'
+data.loc[data['Std_Dev_Flag'] == 'S', 'Method'] = 'Standard Deviation'
+data.loc[data['Percentiles_Flag'] == 'S', 'Method'] = 'Percentiles'
+data.loc[data['IQR_Flag'] == 'S', 'Method'] = 'IQR'
+
+# Creating the boxplot
+plt.figure(figsize=(8, 4))
+sns.boxplot(x='Method', y='CallTimeMinutes', data=data)
+plt.title('Boxplot Comparing Outlier Detection Methods')
+plt.xlabel('Outlier Detection Method')
+plt.ylabel('Call Duration (Seconds)')
+plt.show()
+```
+```{python}
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load the dataset with flags
+#data = pd.read_excel('updated_dataset_with_flags.xlsx')
+
+# Filter the data for each method
+std_dev_data = data[data['Std_Dev_Flag'] == 'S']['CallTimeMinutes']
+percentiles_data = data[data['Percentiles_Flag'] == 'S']['CallTimeMinutes']
+iqr_data = data[data['IQR_Flag'] == 'S']['CallTimeMinutes']
+
+# Creating histograms
+plt.figure(figsize=(8   , 4))
+
+# Histogram for Standard Deviation Method
+plt.subplot(1, 3, 1)
+sns.histplot(std_dev_data, kde=True, color='red')
+plt.title('Standard Deviation Method')
+plt.xlabel('Call Duration (Seconds)')
+plt.ylabel('Frequency')
+
+# Histogram for Percentiles Method
+plt.subplot(1, 3, 2)
+sns.histplot(percentiles_data, kde=True, color='blue')
+plt.title('Percentiles Method')
+plt.xlabel('Call Duration (Seconds)')
+plt.ylabel('Frequency')
+
+# Histogram for IQR Method
+plt.subplot(1, 3, 3)
+sns.histplot(iqr_data, kde=True, color='green')
+plt.title('IQR Method')
+plt.xlabel('Call Duration (Seconds)')
+plt.ylabel('Frequency')
+
+plt.tight_layout()
+plt.show()
+```
+# Finding the min and max values for each method
+```{python}
+import pandas as pd
+
+# Load the dataset with flags
+data['CallTimeMinutes'] .describe()
+```
+```{python}
+
+std_dev_min_max = data[data['Std_Dev_Flag'] == 'S']['CallTimeMinutes'].agg(['min', 'max'])
+percentiles_min_max = data[data['Percentiles_Flag'] == 'S']['CallTimeMinutes'].agg(['min', 'max'])
+iqr_min_max = data[data['IQR_Flag'] == 'S']['CallTimeMinutes'].agg(['min', 'max'])
+
+# Display the results
+print("Standard Deviation Method - Min and Max Outlier Values:", std_dev_min_max)
+print("Percentiles Method - Min and Max Outlier Values:", percentiles_min_max)
+print("IQR Method - Min and Max Outlier Values:", iqr_min_max)
+```
+# Save the updated dataset to a new file
+```{python}
+data.to_excel('../Data/updated_dataset_audit.xlsx', index=False)
+
+```
