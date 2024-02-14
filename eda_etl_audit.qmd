@@ -1,6 +1,6 @@
 ---
 title: EDA and [T]ransform Call Detail Records.
-jupyter: python
+jupyter: python3
 format: html
 ---
 # Import Libraries
@@ -14,7 +14,58 @@ import seaborn as sns
 # Read In Call Detail Records (100,000)
 
 ```{python}
-df = pd.read_excel('../Data/updated_file.xlsx')
+df = pd.read_csv('../Data/updated_file.csv')
+# Convert the "CallDate" column to datetime format
+df['CallDate'] = pd.to_datetime(df['CallDate'])
+
+# Verify the changes
+print(df.info())
+
+df.columns
+```
+```{python}
 df.shape
 ```
 # Begin EDA/Transform
+
+```{python}
+# Display the first few rows of the DataFrame
+print(df.head())
+
+```
+```{python}
+# Display summary statistics of numerical columns
+print(df[['total_distance','CallTimeSeconds','CallTimeMinutes']].describe())
+```
+```{python}
+# Display information about the DataFrame, including data types and non-null counts
+print(df.info())
+```
+# Explore the distribution of values within categorical columns
+
+```{python}
+# Explore the distribution of values within categorical columns
+categorical_columns = ['DayOfWeek', 'mobility_type', 'transport_mode', 'Classification', 'Audit']
+
+for column in categorical_columns:
+    print(f"=== {column} ===")
+    print(df[column].value_counts())
+    print("\n")
+
+```
+```{python}
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Set the style of the seaborn plots
+sns.set_style("whitegrid")
+
+# Create a box plot to compare 'CallTimeMinutes' across different 'DayOfWeek'
+plt.figure(figsize=(10, 6))
+sns.boxplot(x='DayOfWeek', y='CallTimeMinutes', data=df)
+plt.title('Distribution of CallTimeMinutes Across Different Days of the Week')
+plt.xlabel('Day of the Week')
+plt.ylabel('Call Time (Minutes)')
+plt.xticks(rotation=45)  # Rotate x-axis labels for better readability
+plt.show()
+```
