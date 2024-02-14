@@ -1,10 +1,12 @@
 # Chatgpt Prompts. For Call Detail Records (CDR)
 # Prompts were used with free version of ChatGPT
 # ChatGPT: https://chat.openai.com/share/41264e99-d5a2-40e7-8b16-85e19e9d6ae4
+# YouTube: https://youtube.com/live/UpOmfL0Px7g?feature=share
 ```
 (1) Here is a example of Call Detail Record.
 The orignal covers the 4th quarter of 2023 and has 100,000 rows.
 I needs some help using Python to do EDA.
+
 (2) Let's begin with step 1
 (3) The file is saved as a Excel file.
 (4) C:\Users\david\miniconda3\envs\rimb\Data\
