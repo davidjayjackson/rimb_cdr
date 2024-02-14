@@ -1,7 +1,7 @@
 ### Chatgpt Prompts. For Call Detail Records (CDR)
-### Prompts were used with free version of ChatGPT
-### ChatGPT: https://chat.openai.com/share/41264e99-d5a2-40e7-8b16-85e19e9d6ae4
-### YouTube: https://youtube.com/live/UpOmfL0Px7g?feature=share
+#### Prompts were used with free version of ChatGPT
+#### ChatGPT: https://chat.openai.com/share/41264e99-d5a2-40e7-8b16-85e19e9d6ae4
+#### YouTube: https://youtube.com/live/UpOmfL0Px7g?feature=share
 ```
 (1) Here is a example of Call Detail Record.
 The orignal covers the 4th quarter of 2023 and has 100,000 rows.
