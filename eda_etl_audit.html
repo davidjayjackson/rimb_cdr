@@ -98,7 +98,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="import-libraries" class="level1">
 <h1>Import Libraries</h1>
-<div id="b9a24461" class="cell" data-execution_count="1">
+<div id="e70e08eb" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -107,7 +107,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="read-in-call-detail-records-100000" class="level1">
 <h1>Read In Call Detail Records (100,000)</h1>
-<div id="8f0c6eaa" class="cell" data-execution_count="2">
+<div id="0d2e617d" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'../Data/updated_file.csv'</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the "CallDate" column to datetime format</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'CallDate'</span>] <span class="op">=</span> pd.to_datetime(df[<span class="st">'CallDate'</span>])</span>
@@ -148,7 +148,7 @@ None</code></pre>
       dtype='object')</code></pre>
 </div>
 </div>
-<div id="f4b6837c" class="cell" data-execution_count="3">
+<div id="2585b00e" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>(100000, 14)</code></pre>
@@ -157,7 +157,7 @@ None</code></pre>
 </section>
 <section id="begin-edatransform" class="level1">
 <h1>Begin EDA/Transform</h1>
-<div id="48cefd4d" class="cell" data-execution_count="4">
+<div id="ce03161b" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the first few rows of the DataFrame</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df.head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -183,7 +183,7 @@ None</code></pre>
 4        92.700000              G     G  </code></pre>
 </div>
 </div>
-<div id="cf992fa5" class="cell" data-execution_count="5">
+<div id="9b78a289" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Display summary statistics of numerical columns</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[[<span class="st">'total_distance'</span>,<span class="st">'CallTimeSeconds'</span>,<span class="st">'CallTimeMinutes'</span>]].describe())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -198,7 +198,7 @@ min          0.000829        15.000000      -180.000000
 max         99.999452     10800.000000       180.000000</code></pre>
 </div>
 </div>
-<div id="262b8a4c" class="cell" data-execution_count="6">
+<div id="6768faaf" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Display information about the DataFrame, including data types and non-null counts</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df.info())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -229,7 +229,7 @@ None</code></pre>
 </section>
 <section id="explore-the-distribution-of-values-within-categorical-columns" class="level1">
 <h1>Explore the distribution of values within categorical columns</h1>
-<div id="80a1338f" class="cell" data-execution_count="7">
+<div id="67601d1f" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Explore the distribution of values within categorical columns</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>categorical_columns <span class="op">=</span> [<span class="st">'DayOfWeek'</span>, <span class="st">'mobility_type'</span>, <span class="st">'transport_mode'</span>, <span class="st">'Classification'</span>, <span class="st">'Audit'</span>]</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -285,7 +285,7 @@ Name: count, dtype: int64
 </code></pre>
 </div>
 </div>
-<div id="8296f5b0" class="cell" data-execution_count="8">
+<div id="7d7bff89" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -304,6 +304,155 @@ Name: count, dtype: int64
 <div>
 <figure class="figure">
 <p><img src="eda_etl_audit_files/figure-html/cell-9-output-1.png" width="820" height="567" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="creating-histograms-for-calltimeminutes-across-different-dayofweek." class="level1">
+<h1>Creating histograms for ‘CallTimeMinutes’ across different ‘DayOfWeek’.</h1>
+<div id="428d00ff" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the style of the seaborn plots</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">"whitegrid"</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create histograms for 'CallTimeMinutes' across different 'DayOfWeek'</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">8</span>))</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>g <span class="op">=</span> sns.FacetGrid(df, col<span class="op">=</span><span class="st">'DayOfWeek'</span>, col_wrap<span class="op">=</span><span class="dv">3</span>, height<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>g.<span class="bu">map</span>(plt.hist, <span class="st">'CallTimeMinutes'</span>, bins<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>g.set_axis_labels(<span class="st">"Call Time (Minutes)"</span>, <span class="st">"Frequency"</span>)</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">'Distribution of Call Time Across Different Days of the Week'</span>, y<span class="op">=</span><span class="fl">1.02</span>)</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>&lt;Figure size 1152x768 with 0 Axes&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda_etl_audit_files/figure-html/cell-10-output-2.png" width="1143" height="1179" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="we-can-start-by-creating-scatter-plots-to-visualize-the-relationships-between-pairs-of-numerical-variables." class="level1">
+<h1>We can start by creating scatter plots to visualize the relationships between pairs of numerical variables.</h1>
+<div id="3026200c" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the style of the seaborn plots</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">"whitegrid"</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create scatter plots to visualize relationships between pairs of numerical variables</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>numerical_columns <span class="op">=</span> [<span class="st">'total_distance'</span>, <span class="st">'CallTimeSeconds'</span>, <span class="st">'CallTimeMinutes'</span>]</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>sns.pairplot(df[numerical_columns])</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">'Pairwise Relationships Between Numerical Variables'</span>, y<span class="op">=</span><span class="fl">1.02</span>)</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>C:\Users\david\miniconda3\envs\rimb\Lib\site-packages\seaborn\_oldcore.py:1119: FutureWarning: use_inf_as_na option is deprecated and will be removed in a future version. Convert inf values to NaN before operating instead.
+  with pd.option_context('mode.use_inf_as_na', True):
+C:\Users\david\miniconda3\envs\rimb\Lib\site-packages\seaborn\_oldcore.py:1119: FutureWarning: use_inf_as_na option is deprecated and will be removed in a future version. Convert inf values to NaN before operating instead.
+  with pd.option_context('mode.use_inf_as_na', True):
+C:\Users\david\miniconda3\envs\rimb\Lib\site-packages\seaborn\_oldcore.py:1119: FutureWarning: use_inf_as_na option is deprecated and will be removed in a future version. Convert inf values to NaN before operating instead.
+  with pd.option_context('mode.use_inf_as_na', True):</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre><code>&lt;Figure size 1152x576 with 0 Axes&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda_etl_audit_files/figure-html/cell-11-output-3.png" width="712" height="739" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="we-can-create-a-scatter-plot-to-visualize-all-the-calls-by-date-with-different-colors-representing-different-classifications." class="level1">
+<h1>We can create a scatter plot to visualize all the calls by date, with different colors representing different classifications.</h1>
+<div id="8529b558" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import matplotlib.pyplot as plt</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co"># import seaborn as sns</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the style of the seaborn plots</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">"whitegrid"</span>)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a scatter plot to visualize all calls by date with different colors for classifications</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">'CallDate'</span>, y<span class="op">=</span><span class="st">'CallTimeMinutes'</span>, hue<span class="op">=</span><span class="st">'Classification'</span>, data<span class="op">=</span>df, palette<span class="op">=</span><span class="st">'Set1'</span>)</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Scatter Plot of Calls by Date with Different Classifications'</span>)</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Call Date'</span>)</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Call Time (Minutes)'</span>)</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">45</span>)  <span class="co"># Rotate x-axis labels for better readability</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>plt.legend(title<span class="op">=</span><span class="st">'Classification'</span>, bbox_to_anchor<span class="op">=</span>(<span class="fl">1.05</span>, <span class="dv">1</span>), loc<span class="op">=</span><span class="st">'upper left'</span>)</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda_etl_audit_files/figure-html/cell-12-output-1.png" width="1144" height="566" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="how-about-a-line-plot-that-has-3-lines-1-calltimeminutes-2-average-calltimeminutes-3-median-calltimeminutes" class="level1">
+<h1>How about a line plot that has 3 lines, (1) CallTimeMinutes, (2) Average CallTimeMinutes, (3) Median CallTimeMinutes</h1>
+<div id="5516f4fb" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate total CallTimeMinutes per day</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>total_call_time_per_day <span class="op">=</span> df.groupby(<span class="st">'CallDate'</span>)[<span class="st">'CallTimeMinutes'</span>].<span class="bu">sum</span>()</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate average and median CallTimeMinutes by CallDate</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>average_call_time <span class="op">=</span> df.groupby(<span class="st">'CallDate'</span>)[<span class="st">'CallTimeMinutes'</span>].mean()</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>median_call_time <span class="op">=</span> df.groupby(<span class="st">'CallDate'</span>)[<span class="st">'CallTimeMinutes'</span>].median()</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the style of the seaborn plots</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">"whitegrid"</span>)</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Create subplots for each calculation</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">4</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">12</span>), sharex<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot CallTimeMinutes</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot(df[<span class="st">'CallDate'</span>], df[<span class="st">'CallTimeMinutes'</span>], label<span class="op">=</span><span class="st">'CallTimeMinutes'</span>, color<span class="op">=</span><span class="st">'blue'</span>)</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].fill_between(df[<span class="st">'CallDate'</span>], df[<span class="st">'CallTimeMinutes'</span>], color<span class="op">=</span><span class="st">'blue'</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">'Call Time (Minutes)'</span>)</span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].legend()</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot Average CallTimeMinutes</span></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].plot(average_call_time.index, average_call_time.values, label<span class="op">=</span><span class="st">'Average CallTimeMinutes'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, color<span class="op">=</span><span class="st">'green'</span>)</span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].fill_between(average_call_time.index, average_call_time.values, color<span class="op">=</span><span class="st">'green'</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="st">'Average Call Time (Minutes)'</span>)</span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].legend()</span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot Median CallTimeMinutes</span></span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">2</span>].plot(median_call_time.index, median_call_time.values, label<span class="op">=</span><span class="st">'Median CallTimeMinutes'</span>, linestyle<span class="op">=</span><span class="st">'-.'</span>, color<span class="op">=</span><span class="st">'red'</span>)</span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">2</span>].fill_between(median_call_time.index, median_call_time.values, color<span class="op">=</span><span class="st">'red'</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">2</span>].set_ylabel(<span class="st">'Median Call Time (Minutes)'</span>)</span>
+<span id="cb22-30"><a href="#cb22-30" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">2</span>].legend()</span>
+<span id="cb22-31"><a href="#cb22-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-32"><a href="#cb22-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot Total CallTimeMinutes per Day</span></span>
+<span id="cb22-33"><a href="#cb22-33" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">3</span>].plot(total_call_time_per_day.index, total_call_time_per_day.values, label<span class="op">=</span><span class="st">'Total CallTimeMinutes per Day'</span>, linestyle<span class="op">=</span><span class="st">':'</span>, color<span class="op">=</span><span class="st">'purple'</span>)</span>
+<span id="cb22-34"><a href="#cb22-34" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">3</span>].fill_between(total_call_time_per_day.index, total_call_time_per_day.values, color<span class="op">=</span><span class="st">'purple'</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb22-35"><a href="#cb22-35" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">3</span>].set_ylabel(<span class="st">'Total Call Time (Minutes)'</span>)</span>
+<span id="cb22-36"><a href="#cb22-36" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">3</span>].legend()</span>
+<span id="cb22-37"><a href="#cb22-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-38"><a href="#cb22-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Set common title and x-axis label</span></span>
+<span id="cb22-39"><a href="#cb22-39" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">'Call Time Over Time'</span>, y<span class="op">=</span><span class="fl">0.95</span>)</span>
+<span id="cb22-40"><a href="#cb22-40" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Call Date'</span>)</span>
+<span id="cb22-41"><a href="#cb22-41" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">45</span>)  <span class="co"># Rotate x-axis labels for better readability</span></span>
+<span id="cb22-42"><a href="#cb22-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-43"><a href="#cb22-43" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb22-44"><a href="#cb22-44" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda_etl_audit_files/figure-html/cell-13-output-1.png" width="1142" height="1114" class="figure-img"></p>
 </figure>
 </div>
 </div>

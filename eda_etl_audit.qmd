@@ -69,3 +69,110 @@ plt.ylabel('Call Time (Minutes)')
 plt.xticks(rotation=45)  # Rotate x-axis labels for better readability
 plt.show()
 ```
+
+# Creating histograms for 'CallTimeMinutes' across different 'DayOfWeek'.
+
+```{python}
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Set the style of the seaborn plots
+sns.set_style("whitegrid")
+
+# Create histograms for 'CallTimeMinutes' across different 'DayOfWeek'
+plt.figure(figsize=(12, 8))
+g = sns.FacetGrid(df, col='DayOfWeek', col_wrap=3, height=4)
+g.map(plt.hist, 'CallTimeMinutes', bins=20)
+g.set_axis_labels("Call Time (Minutes)", "Frequency")
+plt.suptitle('Distribution of Call Time Across Different Days of the Week', y=1.02)
+plt.tight_layout()
+plt.show()
+```
+# We can start by creating scatter plots to visualize the relationships between pairs of numerical variables. 
+
+```{python}
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Set the style of the seaborn plots
+sns.set_style("whitegrid")
+
+# Create scatter plots to visualize relationships between pairs of numerical variables
+numerical_columns = ['total_distance', 'CallTimeSeconds', 'CallTimeMinutes']
+
+plt.figure(figsize=(12, 6))
+sns.pairplot(df[numerical_columns])
+plt.suptitle('Pairwise Relationships Between Numerical Variables', y=1.02)
+plt.show()
+```
+#  We can create a scatter plot to visualize all the calls by date, with different colors representing different classifications.
+
+```{python}
+# import matplotlib.pyplot as plt
+# import seaborn as sns
+
+# Set the style of the seaborn plots
+sns.set_style("whitegrid")
+
+# Create a scatter plot to visualize all calls by date with different colors for classifications
+plt.figure(figsize=(12, 6))
+sns.scatterplot(x='CallDate', y='CallTimeMinutes', hue='Classification', data=df, palette='Set1')
+plt.title('Scatter Plot of Calls by Date with Different Classifications')
+plt.xlabel('Call Date')
+plt.ylabel('Call Time (Minutes)')
+plt.xticks(rotation=45)  # Rotate x-axis labels for better readability
+plt.legend(title='Classification', bbox_to_anchor=(1.05, 1), loc='upper left')
+plt.tight_layout()
+plt.show()
+```
+# How about a line plot that has 3 lines, (1) CallTimeMinutes, (2) Average CallTimeMinutes, (3) Median CallTimeMinutes
+
+```{python}
+
+# Calculate total CallTimeMinutes per day
+total_call_time_per_day = df.groupby('CallDate')['CallTimeMinutes'].sum()
+
+# Calculate average and median CallTimeMinutes by CallDate
+average_call_time = df.groupby('CallDate')['CallTimeMinutes'].mean()
+median_call_time = df.groupby('CallDate')['CallTimeMinutes'].median()
+
+# Set the style of the seaborn plots
+sns.set_style("whitegrid")
+
+# Create subplots for each calculation
+fig, axes = plt.subplots(4, 1, figsize=(12, 12), sharex=True)
+
+# Plot CallTimeMinutes
+axes[0].plot(df['CallDate'], df['CallTimeMinutes'], label='CallTimeMinutes', color='blue')
+axes[0].fill_between(df['CallDate'], df['CallTimeMinutes'], color='blue', alpha=0.3)
+axes[0].set_ylabel('Call Time (Minutes)')
+axes[0].legend()
+
+# Plot Average CallTimeMinutes
+axes[1].plot(average_call_time.index, average_call_time.values, label='Average CallTimeMinutes', linestyle='--', color='green')
+axes[1].fill_between(average_call_time.index, average_call_time.values, color='green', alpha=0.3)
+axes[1].set_ylabel('Average Call Time (Minutes)')
+axes[1].legend()
+
+# Plot Median CallTimeMinutes
+axes[2].plot(median_call_time.index, median_call_time.values, label='Median CallTimeMinutes', linestyle='-.', color='red')
+axes[2].fill_between(median_call_time.index, median_call_time.values, color='red', alpha=0.3)
+axes[2].set_ylabel('Median Call Time (Minutes)')
+axes[2].legend()
+
+# Plot Total CallTimeMinutes per Day
+axes[3].plot(total_call_time_per_day.index, total_call_time_per_day.values, label='Total CallTimeMinutes per Day', linestyle=':', color='purple')
+axes[3].fill_between(total_call_time_per_day.index, total_call_time_per_day.values, color='purple', alpha=0.3)
+axes[3].set_ylabel('Total Call Time (Minutes)')
+axes[3].legend()
+
+# Set common title and x-axis label
+fig.suptitle('Call Time Over Time', y=0.95)
+plt.xlabel('Call Date')
+plt.xticks(rotation=45)  # Rotate x-axis labels for better readability
+
+plt.tight_layout()
+plt.show()
+
+
+```
