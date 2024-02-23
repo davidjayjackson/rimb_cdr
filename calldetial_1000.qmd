@@ -1,0 +1,100 @@
+---
+title: 1000 Customers 
+format: html
+jupyter: python3
+---
+```{python}
+import random
+import csv
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Generate 30 unique Tunisian phone numbers
+def generate_tunisian_numbers():
+    numbers = []
+    # Tunisian mobile prefixes
+    prefixes = ['20', '21', '22', '23', '24', '25', '26', '27', '28', '29', 
+                '50', '51', '52', '53', '54', '55', '56', '57', '58', '59']
+    # Generating 30 unique numbers
+    for _ in range(30):
+        prefix = random.choice(prefixes)
+        suffix = random.randint(100000, 999999)  # Random 6-digit number
+        number = prefix + str(suffix)
+        numbers.append(number)
+    return numbers
+
+initial_numbers = generate_tunisian_numbers()
+```
+# Generate additional unique Tunisian phone numbers to reach a total of 1000 unique numbers
+
+```{python}
+additional_numbers_needed = 1000 - len(initial_numbers)
+additional_unique_numbers = set()
+while len(additional_unique_numbers) < additional_numbers_needed:
+    new_numbers = generate_tunisian_numbers()
+    additional_unique_numbers.update(new_numbers)
+additional_unique_numbers = list(additional_unique_numbers)[:additional_numbers_needed]
+total_unique_numbers = initial_numbers + additional_unique_numbers
+```
+
+# Load the semi_cdr.csv file
+```{python}
+cdr_file_path = '../Data/semi_cdr.csv'
+cdr_data = pd.read_csv(cdr_file_path, delimiter=';')
+
+# Distributing 1000 unique numbers across 100000 rows
+repeated_numbers = total_unique_numbers * (len(cdr_data) // len(total_unique_numbers))
+repeated_numbers += total_unique_numbers[:len(cdr_data) % len(total_unique_numbers)]
+cdr_data['call_num'] = repeated_numbers
+
+# Calculate the target maximum and minimum counts with a 33% difference
+target_average_count = len(cdr_data) // len(total_unique_numbers)
+target_max_count = int(target_average_count * 1.33)
+target_min_count = int(target_average_count * 0.67)
+```
+
+# Create a distribution of counts for 1000 numbers with the specified range
+
+```{python}
+counts_for_1000_numbers = np.linspace(target_min_count, target_max_count, num=len(total_unique_numbers))
+np.random.shuffle(counts_for_1000_numbers)
+counts_for_1000_numbers = np.round(counts_for_1000_numbers).astype(int)
+```
+
+# Assign phone numbers based on calculated counts
+
+```{python}
+varied_numbers = []
+for number, count in zip(total_unique_numbers, counts_for_1000_numbers):
+    varied_numbers.extend([number] * count)
+
+# Adjust the distribution to match the number of rows in cdr_data
+total_count_difference = len(varied_numbers) - len(cdr_data)
+if total_count_difference > 0:
+    varied_numbers = varied_numbers[:-total_count_difference]
+elif total_count_difference < 0:
+    extra_numbers = np.random.choice(total_unique_numbers, -total_count_difference, replace=True)
+    varied_numbers.extend(extra_numbers)
+
+# Replace the 'call_num' column with the adjusted distribution
+cdr_data['call_num'] = varied_numbers
+```
+
+# Sort the data by phone number and visualize
+
+```{python}
+cdr_data_sorted_by_1000 = cdr_data.sort_values(by='call_num')
+plt.figure(figsize=(20, 8))
+sns.countplot(data=cdr_data_sorted_by_1000, x='call_num', order=cdr_data_sorted_by_1000['call_num'].value_counts().index)
+plt.xticks(rotation=90, fontsize=6)
+plt.xlabel('Phone Number')
+plt.ylabel('Count')
+plt.title('Adjusted Distribution of 1000 Unique Tunisian Phone Numbers with 33% Difference')
+plt.show()
+
+# Save the updated calldetail data to a new CSV file
+final_updated_cdr_file_path = '/mnt/data/final_updated_semi_cdr.csv'
+cdr_data_sorted_by_1000.to_csv(final_updated_cdr_file_path, index=False)
+```
