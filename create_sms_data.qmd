@@ -1,0 +1,70 @@
+---
+title: Make SMS Text Data
+format: html
+jupyter: python
+---
+
+```{python}
+
+import pandas as pd
+import numpy as np
+from datetime import datetime, timedelta
+
+# Define the number of rows
+num_rows = 100000
+
+# Generate random values for each column
+id_cust = np.random.randint(1, 1001, size=num_rows)
+id_sms = np.random.randint(1, 4, size=num_rows)
+start_date = datetime(2023, 10, 1)
+end_date = datetime(2023, 12, 31)
+date_range = end_date - start_date
+date_list = [start_date + timedelta(days=np.random.randint(date_range.days)) for _ in range(num_rows)]
+num_text = np.random.randint(2, 51, size=num_rows)
+
+# Create the DataFrame
+FACT_SMS = pd.DataFrame({
+    'ID_CUST': id_cust,
+    'ID_SMS': id_sms,
+    'DATE': date_list,
+    'NUM_TEXT': num_text
+})
+
+# Print the first few rows of the DataFrame
+print(FACT_SMS.head())
+```
+
+# EDA
+
+```{python}
+import seaborn as sns
+
+sns.histplot(x='NUM_TEXT',data=FACT_SMS)
+```
+```{python}
+import seaborn as sns
+sns.boxplot(x='NUM_TEXT',data=FACT_SMS)
+```
+```{python}
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from datetime import datetime, timedelta
+
+# Generate FACT_SMS DataFrame (assuming you've already created it)
+# Replace this code with the code to create FACT_SMS DataFrame if you haven't done it yet
+
+# Assuming FACT_SMS is already created, let's proceed to plot the number of texts by day
+
+# Group the data by date and sum the number of texts for each day
+texts_by_day = FACT_SMS.groupby('DATE')['NUM_TEXT'].sum()
+
+# Plot the number of texts by day
+plt.figure(figsize=(10, 6))
+texts_by_day.plot()
+plt.title('Number of Texts by Day')
+plt.xlabel('Date')
+plt.ylabel('Number of Texts')
+plt.grid(True)
+plt.show()
+```
