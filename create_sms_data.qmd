@@ -1,7 +1,7 @@
 ---
 title: Make SMS Text Data
 format: html
-jupyter: python
+jupyter: python3
 ---
 
 ```{python}
@@ -31,7 +31,7 @@ FACT_SMS = pd.DataFrame({
 })
 
 # Print the first few rows of the DataFrame
-print(FACT_SMS.head())
+FACT_SMS.describe()
 ```
 
 # EDA
@@ -66,5 +66,70 @@ plt.title('Number of Texts by Day')
 plt.xlabel('Date')
 plt.ylabel('Number of Texts')
 plt.grid(True)
+plt.show()
+```
+```{python}
+import matplotlib.pyplot as plt
+
+# Aggregate the data by phone number and calculate the total number of text messages for each phone number
+phone_totals = FACT_SMS.groupby('ID_CUST')['NUM_TEXT'].sum().sort_values(ascending=False)
+
+# Select the top 10 phones with the most text messages
+top_10_phones = phone_totals.head(10)
+
+# Plot the top 10 phones horizontally
+plt.figure(figsize=(10, 6))
+top_10_phones.plot(kind='barh', color='skyblue')
+plt.title('Top 10 Phones with the Most Text Messages')
+plt.ylabel('Phone Number')
+plt.xlabel('Total Number of Text Messages')
+plt.grid(axis='x', linestyle='--', alpha=0.7)
+plt.tight_layout()
+plt.show()
+
+```
+```{python}
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Convert the 'DATE' column to datetime format
+FACT_SMS['DATE'] = pd.to_datetime(FACT_SMS['DATE'])
+
+# Aggregate the data by day and calculate the average number of text messages for each day
+daily_avg_text = FACT_SMS.groupby('DATE')['NUM_TEXT'].mean()
+
+# Plot the average text messages per day
+plt.figure(figsize=(10, 6))
+daily_avg_text.plot(kind='line', color='green')
+plt.title('Average Text Messages Sent per Day')
+plt.xlabel('Date')
+plt.ylabel('Average Number of Text Messages')
+plt.grid(True, linestyle='--', alpha=0.7)
+plt.tight_layout()
+plt.show()
+
+```
+```{python}
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Convert the 'DATE' column to datetime format
+FACT_SMS['DATE'] = pd.to_datetime(FACT_SMS['DATE'])
+
+# Extract the day of the week
+FACT_SMS['Day_of_Week'] = FACT_SMS['DATE'].dt.day_name()
+
+# Aggregate the data by day of the week and calculate the total number of messages for each day
+messages_by_day_of_week = FACT_SMS.groupby('Day_of_Week')['NUM_TEXT'].sum()
+
+# Plot the number of messages sent by day of the week
+plt.figure(figsize=(10, 6))
+messages_by_day_of_week.plot(kind='bar', color='orange')
+plt.title('Number of Messages Sent by Day of Week')
+plt.xlabel('Day of Week')
+plt.ylabel('Total Number of Messages')
+plt.xticks(rotation=45)
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+plt.tight_layout()
 plt.show()
 ```

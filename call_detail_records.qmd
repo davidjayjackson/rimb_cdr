@@ -106,5 +106,6 @@ plt.show()
 # Write csv file
 
 ```{python}
-cdr_data.head()
+# cdr_data.to_csv('cdr_data_2024_03_04.csv',index=False)
+cdr_data.to_excel("./CDR.xlsx", sheet_name='FACT_CALLS', index=False)
 ```

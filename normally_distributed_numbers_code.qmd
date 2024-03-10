@@ -1,5 +1,9 @@
 ---
-titel: 
+title: Crate random
+
+---
+
+```{python}
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -59,7 +63,7 @@ normally_distributed_numbers_clipped = np.clip(normally_distributed_numbers, 15,
 
 # Saving the DataFrame of normally distributed numbers to a CSV file
 df_normally_distributed = pd.DataFrame(normally_distributed_numbers_clipped, columns=["Normally_Distributed_Numbers"])
-df_normally_distributed.to_csv('normally_distributed_numbers.csv', index=False)
+df_normally_distributed.to_csv('normally_distributed_2024-03-05.csv', index=False)
 
 # Plotting a histogram of the normally distributed numbers
 plt.figure(figsize=(12, 6))
@@ -77,3 +81,4 @@ plt.title('Boxplot of Normally Distributed Random Numbers (Clipped to 15-10800)'
 plt.xlabel('Number')
 plt.grid(True)
 plt.show()
+```

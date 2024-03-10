@@ -1,6 +1,6 @@
 ---
 title: New and Improved Num of Text Send
-format: pdf
+format: html
 jupyter: python3
 ---
 ```{python}
@@ -37,6 +37,9 @@ FACT_SMS = pd.DataFrame({
 })
 # Print the first few rows of the DataFrame
 FACT_SMS['NUM_TEXT'].describe()
+```
+```{python}
+FACT_SMS.to_csv('FACT_SMS.csv',index=False)
 ```
 # Begin EDA
 
@@ -106,13 +109,26 @@ plt.tight_layout()
 plt.show()
 
 ```
+
+# SMS Sorted by Day of Week
+
 ```{python}
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Assuming FACT_SMS is your DataFrame and it's already defined
 
 # Convert the 'DATE' column to datetime format
 FACT_SMS['DATE'] = pd.to_datetime(FACT_SMS['DATE'])
 
 # Extract the day of the week
 FACT_SMS['Day_of_Week'] = FACT_SMS['DATE'].dt.day_name()
+
+# Define the correct order for the days of the week
+days_order = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+
+# Convert 'Day_of_Week' into a categorical type with the defined order
+FACT_SMS['Day_of_Week'] = pd.Categorical(FACT_SMS['Day_of_Week'], categories=days_order, ordered=True)
 
 # Aggregate the data by day of the week and calculate the total number of messages for each day
 messages_by_day_of_week = FACT_SMS.groupby('Day_of_Week')['NUM_TEXT'].sum()
@@ -128,6 +144,4 @@ plt.grid(axis='y', linestyle='--', alpha=0.7)
 plt.tight_layout()
 plt.show()
 ```
-```{python}
-FACT_SMS.to_csv('FACT_SMS.csv',index=False)
-```
+
